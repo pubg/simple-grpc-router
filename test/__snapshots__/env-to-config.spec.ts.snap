@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`envToConfig basic 1`] = `
+Object {
+  "adminPort": 9901,
+  "clusterMap": Map {
+    "cluster-localhost-50051" => Object {
+      "clusterName": "cluster-localhost-50051",
+      "host": "localhost",
+      "port": 50051,
+    },
+    "cluster-localhost-50053" => Object {
+      "clusterName": "cluster-localhost-50053",
+      "host": "localhost",
+      "port": 50053,
+    },
+  },
+  "listenPort": 50051,
+  "nodeCluster": "envoy",
+  "nodeId": "envoy",
+  "outputPath": "/tmp/config.yaml",
+  "routeList": Array [
+    Object {
+      "address": "localhost:50051",
+      "clusterName": "cluster-localhost-50051",
+      "path": "/",
+    },
+    Object {
+      "address": "localhost:50051",
+      "clusterName": "cluster-localhost-50051",
+      "path": "/test1/",
+    },
+    Object {
+      "address": "localhost:50053",
+      "clusterName": "cluster-localhost-50053",
+      "path": "/test2/",
+    },
+  ],
+}
+`;

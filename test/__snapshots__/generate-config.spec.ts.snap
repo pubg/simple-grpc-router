@@ -1,0 +1,207 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generate basic 1`] = `
+Object {
+  "admin": Object {
+    "access_log_path": "/tmp/admin_access.log",
+    "address": Object {
+      "socket_address": Object {
+        "address": "0.0.0.0",
+        "port_value": 9901,
+      },
+    },
+  },
+  "node": Object {
+    "cluster": "envoy",
+    "id": "envoy",
+  },
+  "static_resources": Object {
+    "clusters": Array [
+      Object {
+        "circuit_breakers": Object {
+          "thresholds": Object {
+            "max_pending_requests": 100000000,
+            "max_requests": 100000000,
+          },
+        },
+        "connect_timeout": "1.25s",
+        "dns_lookup_family": "V4_ONLY",
+        "http2_protocol_options": Object {},
+        "lb_policy": "round_robin",
+        "load_assignment": Object {
+          "cluster_name": "cluster-localhost-50051",
+          "endpoints": Array [
+            Object {
+              "lb_endpoints": Array [
+                Object {
+                  "endpoint": Object {
+                    "address": Object {
+                      "socket_address": Object {
+                        "address": "localhost",
+                        "port_value": 50051,
+                      },
+                    },
+                  },
+                },
+              ],
+            },
+          ],
+        },
+        "name": "cluster-localhost-50051",
+        "type": "strict_dns",
+      },
+      Object {
+        "circuit_breakers": Object {
+          "thresholds": Object {
+            "max_pending_requests": 100000000,
+            "max_requests": 100000000,
+          },
+        },
+        "connect_timeout": "1.25s",
+        "dns_lookup_family": "V4_ONLY",
+        "http2_protocol_options": Object {},
+        "lb_policy": "round_robin",
+        "load_assignment": Object {
+          "cluster_name": "cluster-localhost-50052",
+          "endpoints": Array [
+            Object {
+              "lb_endpoints": Array [
+                Object {
+                  "endpoint": Object {
+                    "address": Object {
+                      "socket_address": Object {
+                        "address": "localhost",
+                        "port_value": 50052,
+                      },
+                    },
+                  },
+                },
+              ],
+            },
+          ],
+        },
+        "name": "cluster-localhost-50052",
+        "type": "strict_dns",
+      },
+    ],
+    "listeners": Array [
+      Object {
+        "address": Object {
+          "socket_address": Object {
+            "address": "0.0.0.0",
+            "port_value": 50051,
+          },
+        },
+        "filter_chains": Array [
+          Object {
+            "filters": Array [
+              Object {
+                "name": "envoy.http_connection_manager",
+                "typed_config": Object {
+                  "@type": "type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager",
+                  "access_log": Array [
+                    Object {
+                      "name": "envoy.file_access_log",
+                      "typed_config": Object {
+                        "@type": "type.googleapis.com/envoy.extensions.access_loggers.file.v3.FileAccessLog",
+                        "path": "/dev/stdout",
+                      },
+                    },
+                  ],
+                  "codec_type": "AUTO",
+                  "http_filters": Array [
+                    Object {
+                      "name": "envoy.filters.http.grpc_web",
+                      "typed_config": Object {
+                        "@type": "type.googleapis.com/envoy.extensions.filters.http.grpc_web.v3.GrpcWeb",
+                      },
+                    },
+                    Object {
+                      "name": "envoy.filters.http.cors",
+                      "typed_config": Object {
+                        "@type": "type.googleapis.com/envoy.extensions.filters.http.cors.v3.Cors",
+                      },
+                    },
+                    Object {
+                      "name": "envoy.filters.http.router",
+                      "typed_config": Object {
+                        "@type": "type.googleapis.com/envoy.extensions.filters.http.router.v3.Router",
+                      },
+                    },
+                  ],
+                  "route_config": Object {
+                    "name": "local_route",
+                    "virtual_hosts": Array [
+                      Object {
+                        "domains": Array [
+                          "*",
+                        ],
+                        "name": "local_service",
+                        "retry_policy": Object {
+                          "num_retries": 3,
+                          "per_try_timeout": "3600s",
+                          "retry_back_off": Object {
+                            "base_interval": "2s",
+                            "max_interval": "2s",
+                          },
+                          "retry_on": "connect-failure,refused-stream,unavailable",
+                        },
+                        "routes": Array [
+                          Object {
+                            "match": Object {
+                              "path": "/",
+                            },
+                            "route": Object {
+                              "cluster": "cluster-localhost-50051",
+                              "timeout": "600s",
+                            },
+                          },
+                          Object {
+                            "match": Object {
+                              "path": "/test1/",
+                            },
+                            "route": Object {
+                              "cluster": "cluster-localhost-50051",
+                              "timeout": "600s",
+                            },
+                          },
+                          Object {
+                            "match": Object {
+                              "path": "/test2/",
+                            },
+                            "route": Object {
+                              "cluster": "cluster-localhost-50052",
+                              "timeout": "600s",
+                            },
+                          },
+                          Object {
+                            "direct_response": Object {
+                              "body": Object {
+                                "inline_string": "ok",
+                              },
+                              "status": 200,
+                            },
+                            "match": Object {
+                              "path": "/",
+                            },
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  "stat_prefix": "grpc_json",
+                  "upgrade_configs": Object {
+                    "enabled": true,
+                    "upgrade_type": "websocket",
+                  },
+                },
+              },
+            ],
+          },
+        ],
+        "name": "listener",
+      },
+    ],
+  },
+}
+`;
