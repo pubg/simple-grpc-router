@@ -149,7 +149,7 @@ Object {
                         "routes": Array [
                           Object {
                             "match": Object {
-                              "path": "/",
+                              "prefix": "/",
                             },
                             "route": Object {
                               "cluster": "cluster-localhost-50051",
@@ -158,7 +158,7 @@ Object {
                           },
                           Object {
                             "match": Object {
-                              "path": "/test1/",
+                              "prefix": "/test1/",
                             },
                             "route": Object {
                               "cluster": "cluster-localhost-50051",
@@ -167,7 +167,7 @@ Object {
                           },
                           Object {
                             "match": Object {
-                              "path": "/test2/",
+                              "prefix": "/test2/",
                             },
                             "route": Object {
                               "cluster": "cluster-localhost-50052",

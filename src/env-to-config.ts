@@ -8,7 +8,7 @@ export type ENV = {
 }
 
 export type Route = {
-    path: string;
+    prefix: string;
     address: string;
     clusterName: string;
 }
@@ -43,13 +43,13 @@ export function envToConfig({
     const getClusterName = (address: string) => `cluster-${address.replace(/[^a-zA-Z0-9]/g, '-')}`;
 
     const routeList = (PATH_REDIRECT || '').split(',').map(s => {
-        const [path, address] = s.split('->');
+        const [prefix, address] = s.split('->');
 
-        if (!path || !address || !address.includes(':')) throw new Error(`Invalid route (${s})\nRoute must be in format 'PATH->HOST:PORT'`);
+        if (!prefix || !address || !address.includes(':')) throw new Error(`Invalid route (${s})\nRoute must be in format 'PATH->HOST:PORT'`);
 
-        if (pathSet.has(path)) throw new Error(`Duplicate path (${path})`);
+        if (pathSet.has(prefix)) throw new Error(`Duplicate path prefix (${prefix})`);
 
-        pathSet.add(path);
+        pathSet.add(prefix);
         const clusterName = getClusterName(address);
 
         if (!clusterMap.has(clusterName)) {
@@ -61,7 +61,7 @@ export function envToConfig({
             });
         }
 
-        return { path, address, clusterName: getClusterName(address) };
+        return { prefix, address, clusterName: getClusterName(address) };
     });
 
     return {

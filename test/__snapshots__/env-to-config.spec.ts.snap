@@ -23,17 +23,17 @@ Object {
     Object {
       "address": "localhost:50051",
       "clusterName": "cluster-localhost-50051",
-      "path": "/",
+      "prefix": "/",
     },
     Object {
       "address": "localhost:50051",
       "clusterName": "cluster-localhost-50051",
-      "path": "/test1/",
+      "prefix": "/test1/",
     },
     Object {
       "address": "localhost:50053",
       "clusterName": "cluster-localhost-50053",
-      "path": "/test2/",
+      "prefix": "/test2/",
     },
   ],
 }

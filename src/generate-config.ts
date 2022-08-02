@@ -25,7 +25,7 @@ export function generateConfig(cfg: Config): EnvoyConfig {
     };
 
     const routes: RouteElement[] = cfg.routeList.map(route => ({
-        match: { path: route.path },
+        match: { prefix: route.prefix },
         route: {
             cluster: route.clusterName,
             timeout: '600s',
