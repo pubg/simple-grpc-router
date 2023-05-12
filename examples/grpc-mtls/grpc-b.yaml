@@ -1,0 +1,20 @@
+nodeId: grpc-b
+port: 50251
+adminPort: '50252'
+certName: grpc-b-cert
+caName: ca-trust
+filters:
+- path: "/test/"
+  host: 0.0.0.0
+  port: 31327
+secrets:
+- name: grpc-b-cert
+  tls_certificate:
+    certificate_chain:
+      filename: "/cert/grpc-unknown.crt"
+    private_key:
+      filename: "/cert/grpc-unknown.key"
+- name: ca-trust
+  validation_context:
+    trusted_ca:
+      filename: "/cert/ca-trust.crt"
