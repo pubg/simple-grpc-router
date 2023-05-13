@@ -8,14 +8,8 @@ export const INFO = debuglog('INFO');
 export const WARN = debuglog('WARN');
 export const ERROR = debuglog('ERROR');
 
-const ERROR_COMMON = `
-Use 'export PATH_REDIRECT=<route>' to set it.
-
-Example:
-export PATH_REDIRECT=$PATH->$HOST:$PORT,$PATH->$HOST:$PORT,...
-`.trim();
-
 process.on('uncaughtException', (err) => {
-    console.error(err.message + '\n\n' + ERROR_COMMON);
+    console.error(err.message);
+    console.error(err.stack);
     process.exit(1);
 });

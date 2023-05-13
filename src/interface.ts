@@ -37,6 +37,49 @@ export interface Cluster {
     load_assignment: LoadAssignment;
     http2_protocol_options: Http2ProtocolOptions;
     circuit_breakers: CircuitBreakers;
+    transport_socket?: ClusterTransportSocket;
+}
+
+export interface ClusterTransportSocket {
+    name: 'envoy.transport_sockets.tls',
+    typed_config: {
+        "@type": 'type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext',
+        common_tls_context: {
+            tls_certificate_sds_secret_configs: {
+                name: string,
+                sds_config: {
+                    path: string
+                },
+            },
+            validation_context_sds_secret_config?: {
+                name: string,
+                sds_config: {
+                    path: string
+                },
+            },
+        }
+    }
+}
+
+export interface ListenerTransportSocket {
+    name: 'envoy.transport_sockets.tls',
+    typed_config: {
+        "@type": 'type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.DownstreamTlsContext',
+        common_tls_context: {
+            tls_certificate_sds_secret_configs: {
+                name: string,
+                sds_config: {
+                    path: string
+                },
+            },
+            validation_context_sds_secret_config?: {
+                name: string,
+                sds_config: {
+                    path: string
+                },
+            },
+        }
+    }
 }
 
 export interface CircuitBreakers {
@@ -85,6 +128,7 @@ export interface Listener {
 
 export interface FilterChain {
     filters: Filter[];
+    transport_socket?: ListenerTransportSocket;
 }
 
 export interface Filter {
@@ -173,4 +217,14 @@ export interface RouteRoute {
 export interface UpgradeConfigs {
     upgrade_type: string;
     enabled: boolean;
+}
+
+export interface SDSResources {
+    resources: SDSResourceSecret[];
+}
+
+export interface SDSResourceSecret {
+    '@type': 'type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.Secret',
+    name: string,
+    [key: string]: any
 }

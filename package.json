@@ -1,6 +1,6 @@
 {
   "name": "simple-grpc-rouer",
-  "version": "0.0.3",
+  "version": "2.0.0",
   "description": "A simple grpc router",
   "main": "index.js",
   "scripts": {

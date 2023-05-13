@@ -5,35 +5,200 @@ Object {
   "adminPort": 9901,
   "clusterMap": Map {
     "cluster-localhost-50051" => Object {
+      "caName": undefined,
+      "certName": undefined,
       "clusterName": "cluster-localhost-50051",
       "host": "localhost",
       "port": 50051,
     },
     "cluster-localhost-50053" => Object {
+      "caName": undefined,
+      "certName": undefined,
       "clusterName": "cluster-localhost-50053",
       "host": "localhost",
       "port": 50053,
     },
   },
   "listenPort": 50051,
+  "listenerCAName": undefined,
+  "listenerCertName": undefined,
   "nodeCluster": "envoy",
   "nodeId": "envoy",
-  "outputPath": "/tmp/config.yaml",
+  "outputPath": "/tmp/",
   "routeList": Array [
     Object {
       "address": "localhost:50051",
       "clusterName": "cluster-localhost-50051",
-      "prefix": "/",
+      "path": "/",
     },
     Object {
       "address": "localhost:50051",
       "clusterName": "cluster-localhost-50051",
-      "prefix": "/test1/",
+      "path": "/test1/",
     },
     Object {
       "address": "localhost:50053",
       "clusterName": "cluster-localhost-50053",
-      "prefix": "/test2/",
+      "path": "/test2/",
+    },
+  ],
+  "sdsConfigResources": Array [],
+}
+`;
+
+exports[`envToConfig cluster-tls 1`] = `
+Object {
+  "adminPort": 9901,
+  "clusterMap": Map {
+    "cluster-localhost-50051" => Object {
+      "caName": "ca-cert",
+      "certName": "cluster-cert",
+      "clusterName": "cluster-localhost-50051",
+      "host": "localhost",
+      "port": 50051,
+    },
+  },
+  "listenPort": 50051,
+  "listenerCAName": undefined,
+  "listenerCertName": undefined,
+  "nodeCluster": "envoy",
+  "nodeId": "envoy",
+  "outputPath": "/tmp/",
+  "routeList": Array [
+    Object {
+      "address": "localhost:50051",
+      "clusterName": "cluster-localhost-50051",
+      "path": "/",
+    },
+  ],
+  "sdsConfigResources": Array [
+    Object {
+      "name": "cluster-cert",
+      "tls_certificate": Object {
+        "certificate_chain": Object {
+          "filename": "cluster-cert/cert",
+        },
+        "private_key": Object {
+          "filename": "cluster-cert/key",
+        },
+      },
+    },
+    Object {
+      "name": "ca-cert",
+      "validation_context": Object {
+        "trusted_ca": Object {
+          "filename": "ca-cert/ca",
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`envToConfig listener-tls 1`] = `
+Object {
+  "adminPort": 9901,
+  "clusterMap": Map {
+    "cluster-localhost-50051" => Object {
+      "caName": undefined,
+      "certName": undefined,
+      "clusterName": "cluster-localhost-50051",
+      "host": "localhost",
+      "port": 50051,
+    },
+  },
+  "listenPort": 50051,
+  "listenerCAName": "ca-cert",
+  "listenerCertName": "listener-cert",
+  "nodeCluster": "envoy",
+  "nodeId": "envoy",
+  "outputPath": "/tmp/",
+  "routeList": Array [
+    Object {
+      "address": "localhost:50051",
+      "clusterName": "cluster-localhost-50051",
+      "path": "/",
+    },
+  ],
+  "sdsConfigResources": Array [
+    Object {
+      "name": "listener-cert",
+      "tls_certificate": Object {
+        "certificate_chain": Object {
+          "filename": "listener-cert/cert",
+        },
+        "private_key": Object {
+          "filename": "listener-cert/key",
+        },
+      },
+    },
+    Object {
+      "name": "ca-cert",
+      "validation_context": Object {
+        "trusted_ca": Object {
+          "filename": "ca-cert/ca",
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`envToConfig mtls 1`] = `
+Object {
+  "adminPort": 9901,
+  "clusterMap": Map {
+    "cluster-localhost-50051" => Object {
+      "caName": "ca-cert",
+      "certName": "cluster-cert",
+      "clusterName": "cluster-localhost-50051",
+      "host": "localhost",
+      "port": 50051,
+    },
+  },
+  "listenPort": 50051,
+  "listenerCAName": "ca-cert",
+  "listenerCertName": "listener-cert",
+  "nodeCluster": "envoy",
+  "nodeId": "envoy",
+  "outputPath": "/tmp/",
+  "routeList": Array [
+    Object {
+      "address": "localhost:50051",
+      "clusterName": "cluster-localhost-50051",
+      "path": "/",
+    },
+  ],
+  "sdsConfigResources": Array [
+    Object {
+      "name": "cluster-cert",
+      "tls_certificate": Object {
+        "certificate_chain": Object {
+          "filename": "cluster-cert/cert",
+        },
+        "private_key": Object {
+          "filename": "cluster-cert/key",
+        },
+      },
+    },
+    Object {
+      "name": "listener-cert",
+      "tls_certificate": Object {
+        "certificate_chain": Object {
+          "filename": "listener-cert/cert",
+        },
+        "private_key": Object {
+          "filename": "listener-cert/key",
+        },
+      },
+    },
+    Object {
+      "name": "ca-cert",
+      "validation_context": Object {
+        "trusted_ca": Object {
+          "filename": "ca-cert/ca",
+        },
+      },
     },
   ],
 }

@@ -1,18 +1,119 @@
 This is a gRPC Path-based Envoy Config Generator for Envoy Container Runtime.
 
-It is designed to route to grpc hosts using minimal and simple routing syntax.
+It is designed to route gRPC hosts using a minimal and simple routing syntax.
 
 ---
 
 ## Environment Variables
 
-ENV | TYPE | DESCRIPTION | EXAMPLE | DEFAULT
----|---|---|---|---
-PATH_REDIRECT | string | path to redirect. comma separated.<br/>/PATH/->HOST:PORT,/PATH/->HOST:PORT,... | /package.name.service/->127.0.0.1:50051|
-NODE_ID | string | node id | node-1 | envoy
-NODE_CLUSTER | string | node cluster | node-1 | envoy
-ADMIN_PORT | number | admin port | 9901 | 9901
-PORT | number | grpc listening port | 50051 | 50051
+ENV | TYPE | DESCRIPTION | EXAMPLE
+---|---|---|---|
+ROUTER_CONFIG_PATH | string | Router Config File Path. if not set, use ROUTER_CONFIG | /config/router.json or /config/router.yaml
+ROUTER_CONFIG | string | Router Config JSON | see below
+
+## Router Config
+### Types
+```typescript
+type RouterConfig = {
+    filters: Filter[],
+    nodeId?: string,
+    nodeCluster?: string,
+    adminPort?: number,
+    /** Listener port */
+    port?: number,
+    /** Listener TLS cert name (sds resource name) */
+    certName?: string,
+    /** Listener CA cert name (sds resource name) */
+    caName?: string,
+    /** SDS config resources */
+    secrets?: Secret[]
+}
+
+type Filter = {
+    path: string,
+    host: string,
+    port: number,
+    certName?: string,
+    caName?: string
+}
+
+type Secret = SecretTLS | SecretCA
+
+type SecretTLS = {
+    name: string,
+    tls_certificate: {
+        certificate_chain: {
+            filename: string
+        },
+        private_key: {
+            filename: string
+        }
+    }
+}
+
+type SecretCA = {
+    name: string,
+    validation_context: {
+        trusted_ca: {
+            filename: string
+        }
+    }
+}
+```
+
+### Example
+```json
+{
+    "certName": "client_cert", // enable TLS listener
+    "caName": "ca_cert",       // enable TLS Validation Context
+    "filters": [
+        {
+            "path": "/package.name.service/",
+            "host": "localhost",
+            "port": 50051
+        },
+        {
+            "path": "/package.with.mtls/",
+            "host": "localhost",
+            "port": 50051,
+            "certName": "server_cert", // enable TLS for this route
+            "caName": "ca_cert"        // enable TLS Validation Context for this route
+        }
+    ],
+    "secrets": [
+        {
+            "name": "client_cert",
+            "tls_certificate": {
+                "certificate_chain": {
+                    "filename": "/certs/client.crt"
+                },
+                "private_key": {
+                    "filename": "/certs/client.key"
+                }
+            }
+        },
+        {
+            "name": "server_cert",
+            "tls_certificate": {
+                "certificate_chain": {
+                    "filename": "/certs/server.crt"
+                },
+                "private_key": {
+                    "filename": "/certs/server.key"
+                }
+            }
+        },
+        {
+            "name": "ca_cert",
+            "validation_context": {
+                "trusted_ca": {
+                    "filename": "/certs/ca.crt"
+                }
+            }
+        }
+    ]
+}
+```
 
 # License
 MIT License
