@@ -3,7 +3,8 @@ import { envToConfig } from "./lib/env-to-config";
 import { generateConfig } from "./lib/generate-config";
 import { generateSDS, getSdsPath } from "./lib/generate-sds";
 import { yamlDump, yamlParse } from "./lib/yaml";
-import fs from "fs";
+import fs from "node:fs";
+import { join } from "node:path";
 
 export function writeEnvoyConfig() {
 
@@ -31,7 +32,7 @@ export function writeEnvoyConfig() {
 
     const config = envToConfig(rc);
     const configYaml = yamlDump(generateConfig(config));
-    const path = `${config.outputPath}/config.yaml`;
+    const path = join(config.outputPath, 'config.yaml');
 
     fs.writeFileSync(path, configYaml);
 
@@ -39,7 +40,7 @@ export function writeEnvoyConfig() {
     console.log(`Wrote envoy config to ${path}`);
 
     for (const secret of config.sdsConfigResources) {
-        const path = getSdsPath(secret.name);
+        const path = getSdsPath(config.outputPath, secret.name);
         const sdsYaml = yamlDump(generateSDS(secret));
         fs.writeFileSync(path, yamlDump(generateSDS(secret)));
         console.log(`\n${sdsYaml}`);

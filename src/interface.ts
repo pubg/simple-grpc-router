@@ -35,7 +35,15 @@ export interface Cluster {
     lb_policy: string;
     dns_lookup_family: string;
     load_assignment: LoadAssignment;
-    http2_protocol_options: Http2ProtocolOptions;
+    typed_extension_protocol_options?: {
+        "envoy.extensions.upstreams.http.v3.HttpProtocolOptions": {
+            "@type": "type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions";
+            auto_config: {
+                http_protocol_options: HttpProtocolOptions;
+                http2_protocol_options: Http2ProtocolOptions;
+            }
+        }
+    };
     circuit_breakers: CircuitBreakers;
     transport_socket?: ClusterTransportSocket;
 }
@@ -45,16 +53,23 @@ export interface ClusterTransportSocket {
     typed_config: {
         "@type": 'type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext',
         common_tls_context: {
-            tls_certificate_sds_secret_configs: {
+            alpn_protocols: 'h2,http/1.1',
+            tls_certificate_sds_secret_configs?: {
                 name: string,
                 sds_config: {
-                    path: string
+                    resource_api_version: "V3"
+                    path_config_source: {
+                        path: string
+                    }
                 },
             },
             validation_context_sds_secret_config?: {
                 name: string,
                 sds_config: {
-                    path: string
+                    resource_api_version: "V3"
+                    path_config_source: {
+                        path: string
+                    }
                 },
             },
         }
@@ -66,16 +81,23 @@ export interface ListenerTransportSocket {
     typed_config: {
         "@type": 'type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.DownstreamTlsContext',
         common_tls_context: {
-            tls_certificate_sds_secret_configs: {
+            alpn_protocols: 'h2,http/1.1',
+            tls_certificate_sds_secret_configs?: {
                 name: string,
                 sds_config: {
-                    path: string
+                    resource_api_version: "V3"
+                    path_config_source: {
+                        path: string
+                    }
                 },
             },
             validation_context_sds_secret_config?: {
                 name: string,
                 sds_config: {
-                    path: string
+                    resource_api_version: "V3"
+                    path_config_source: {
+                        path: string
+                    }
                 },
             },
         }
@@ -89,6 +111,9 @@ export interface CircuitBreakers {
 export interface Thresholds {
     max_pending_requests: number;
     max_requests: number;
+}
+
+export interface HttpProtocolOptions {
 }
 
 export interface Http2ProtocolOptions {
@@ -123,6 +148,7 @@ export interface FluffySocketAddress {
 export interface Listener {
     name: string;
     address: EndpointAddress;
+    listener_filters?: any[];
     filter_chains: FilterChain[];
 }
 

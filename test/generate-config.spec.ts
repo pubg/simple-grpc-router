@@ -141,7 +141,7 @@ describe('generate', () => {
             expect(configYaml).toMatchSnapshot();
 
             for (const secret of config.sdsConfigResources) {
-                const path = getSdsPath(secret.name);
+                const path = getSdsPath(config.outputPath, secret.name);
                 const sdsYaml = yamlDump(generateSDS(secret));
                 expect({ path, sdsYaml }).toMatchSnapshot();
             }

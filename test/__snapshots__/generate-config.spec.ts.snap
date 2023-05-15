@@ -17,6 +17,7 @@ static_resources:
         socket_address:
           address: 0.0.0.0
           port_value: 50051
+      listener_filters: []
       filter_chains:
         - filters:
             - name: envoy.http_connection_manager
@@ -141,6 +142,7 @@ static_resources:
         socket_address:
           address: 0.0.0.0
           port_value: 50051
+      listener_filters: []
       filter_chains:
         - filters:
             - name: envoy.http_connection_manager
@@ -222,14 +224,19 @@ static_resources:
           '@type': >-
             type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext
           common_tls_context:
+            alpn_protocols: h2,http/1.1
             tls_certificate_sds_secret_configs:
               name: cluster-cert
               sds_config:
-                path: /tmp/sds-cluster-cert.yaml
+                resource_api_version: V3
+                path_config_source:
+                  path: /tmp/sds-cluster-cert.yaml
             validation_context_sds_secret_config:
               name: ca-cert
               sds_config:
-                path: /tmp/sds-ca-cert.yaml
+                resource_api_version: V3
+                path_config_source:
+                  path: /tmp/sds-ca-cert.yaml
 "
 `;
 
@@ -278,6 +285,7 @@ static_resources:
         socket_address:
           address: 0.0.0.0
           port_value: 50051
+      listener_filters: []
       filter_chains:
         - transport_socket:
             name: envoy.transport_sockets.tls
@@ -285,14 +293,19 @@ static_resources:
               '@type': >-
                 type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.DownstreamTlsContext
               common_tls_context:
+                alpn_protocols: h2,http/1.1
                 tls_certificate_sds_secret_configs:
                   name: listener-cert
                   sds_config:
-                    path: /tmp/sds-listener-cert.yaml
+                    resource_api_version: V3
+                    path_config_source:
+                      path: /tmp/sds-listener-cert.yaml
                 validation_context_sds_secret_config:
                   name: ca-cert
                   sds_config:
-                    path: /tmp/sds-ca-cert.yaml
+                    resource_api_version: V3
+                    path_config_source:
+                      path: /tmp/sds-ca-cert.yaml
           filters:
             - name: envoy.http_connection_manager
               typed_config:
@@ -415,6 +428,7 @@ static_resources:
         socket_address:
           address: 0.0.0.0
           port_value: 50051
+      listener_filters: []
       filter_chains:
         - transport_socket:
             name: envoy.transport_sockets.tls
@@ -422,14 +436,19 @@ static_resources:
               '@type': >-
                 type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.DownstreamTlsContext
               common_tls_context:
+                alpn_protocols: h2,http/1.1
                 tls_certificate_sds_secret_configs:
                   name: listener-cert
                   sds_config:
-                    path: /tmp/sds-listener-cert.yaml
+                    resource_api_version: V3
+                    path_config_source:
+                      path: /tmp/sds-listener-cert.yaml
                 validation_context_sds_secret_config:
                   name: ca-cert
                   sds_config:
-                    path: /tmp/sds-ca-cert.yaml
+                    resource_api_version: V3
+                    path_config_source:
+                      path: /tmp/sds-ca-cert.yaml
           filters:
             - name: envoy.http_connection_manager
               typed_config:
@@ -510,14 +529,19 @@ static_resources:
           '@type': >-
             type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext
           common_tls_context:
+            alpn_protocols: h2,http/1.1
             tls_certificate_sds_secret_configs:
               name: cluster-cert
               sds_config:
-                path: /tmp/sds-cluster-cert.yaml
+                resource_api_version: V3
+                path_config_source:
+                  path: /tmp/sds-cluster-cert.yaml
             validation_context_sds_secret_config:
               name: ca-cert
               sds_config:
-                path: /tmp/sds-ca-cert.yaml
+                resource_api_version: V3
+                path_config_source:
+                  path: /tmp/sds-ca-cert.yaml
 "
 `;
 
