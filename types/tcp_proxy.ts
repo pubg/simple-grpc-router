@@ -21,7 +21,6 @@ export interface ProtoGrpcType {
           ExtensionFilter: MessageTypeDefinition
           GrpcStatusFilter: MessageTypeDefinition
           HeaderFilter: MessageTypeDefinition
-          LogTypeFilter: MessageTypeDefinition
           MetadataFilter: MessageTypeDefinition
           NotHealthCheckFilter: MessageTypeDefinition
           OrFilter: MessageTypeDefinition
@@ -49,6 +48,8 @@ export interface ProtoGrpcType {
           Extension: MessageTypeDefinition
           ExtensionConfigSource: MessageTypeDefinition
           ExtraSourceAddress: MessageTypeDefinition
+          FilesystemCollectionSubscription: MessageTypeDefinition
+          FilesystemSubscription: MessageTypeDefinition
           GrpcService: MessageTypeDefinition
           HeaderMap: MessageTypeDefinition
           HeaderValue: MessageTypeDefinition
@@ -65,6 +66,7 @@ export interface ProtoGrpcType {
           RateLimitSettings: MessageTypeDefinition
           RemoteDataSource: MessageTypeDefinition
           RequestMethod: EnumTypeDefinition
+          RestSubscription: MessageTypeDefinition
           RetryPolicy: MessageTypeDefinition
           RoutingPriority: EnumTypeDefinition
           RuntimeDouble: MessageTypeDefinition
@@ -107,21 +109,6 @@ export interface ProtoGrpcType {
           VirtualCluster: MessageTypeDefinition
           VirtualHost: MessageTypeDefinition
           WeightedCluster: MessageTypeDefinition
-        }
-      }
-    }
-    data: {
-      accesslog: {
-        v3: {
-          AccessLogCommon: MessageTypeDefinition
-          AccessLogType: EnumTypeDefinition
-          ConnectionProperties: MessageTypeDefinition
-          HTTPAccessLogEntry: MessageTypeDefinition
-          HTTPRequestProperties: MessageTypeDefinition
-          HTTPResponseProperties: MessageTypeDefinition
-          ResponseFlags: MessageTypeDefinition
-          TCPAccessLogEntry: MessageTypeDefinition
-          TLSProperties: MessageTypeDefinition
         }
       }
     }

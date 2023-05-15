@@ -7,7 +7,7 @@
     "test": "jest",
     "watch": "jest --watchAll",
     "start": "ts-node src/index.ts",
-    "docker.build": "docker build -t simple-grpc-rouer:latest .",
+    "build": "docker build -t simple-grpc-rouer:latest .",
     "generate-types": "./bin/generate-types.sh",
     "grpc-mtls": "docker-compose -f ./examples/grpc-mtls/docker-compose.yml up --build"
   },

@@ -1,13 +1,17 @@
 #!/bin/bash -e
 # This script is used to generate the typescript types for the envoy proto files.
 
+# read ENVOY_VERSION from ../Dockerfile
+ENVOY_VERSION=`grep 'ARG ENVOY_VERSION' Dockerfile | cut -d '=' -f 2`
+echo "Generating types for envoy version $ENVOY_VERSION"
+
 # Install the dependencies
 echo "Installing dependencies"
 npm install -g @grpc/proto-loader
 
 # Clone the repos
 echo "Cloning repos"
-[ ! -d '.repos/envoy' ] && git clone --depth=1 git@github.com:envoyproxy/envoy.git .repos/envoy 
+[ ! -d '.repos/envoy' ] && git clone --depth=1 --branch $ENVOY_VERSION git@github.com:envoyproxy/envoy.git .repos/envoy 
 [ ! -d '.repos/udpa' ] && git clone --depth=1 git@github.com:cncf/udpa.git .repos/udpa
 [ ! -d '.repos/protoc-gen-validate' ] && git clone --depth=1 git@github.com:bufbuild/protoc-gen-validate.git .repos/protoc-gen-validate
 [ ! -d '.repos/xds' ] && git clone --depth=1 git@github.com:cncf/xds.git .repos/xds

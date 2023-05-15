@@ -30,7 +30,6 @@ export interface Http1ProtocolOptions {
   'override_stream_error_on_invalid_http_message'?: (_google_protobuf_BoolValue | null);
   'send_fully_qualified_url'?: (boolean);
   'use_balsa_parser'?: (_google_protobuf_BoolValue | null);
-  'allow_custom_methods'?: (boolean);
 }
 
 export interface Http1ProtocolOptions__Output {
@@ -43,5 +42,4 @@ export interface Http1ProtocolOptions__Output {
   'override_stream_error_on_invalid_http_message'?: (_google_protobuf_BoolValue__Output);
   'send_fully_qualified_url'?: (boolean);
   'use_balsa_parser'?: (_google_protobuf_BoolValue__Output);
-  'allow_custom_methods'?: (boolean);
 }

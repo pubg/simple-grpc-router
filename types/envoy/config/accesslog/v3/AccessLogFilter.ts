@@ -12,7 +12,6 @@ import type { ResponseFlagFilter as _envoy_config_accesslog_v3_ResponseFlagFilte
 import type { GrpcStatusFilter as _envoy_config_accesslog_v3_GrpcStatusFilter, GrpcStatusFilter__Output as _envoy_config_accesslog_v3_GrpcStatusFilter__Output } from '../../../../envoy/config/accesslog/v3/GrpcStatusFilter';
 import type { ExtensionFilter as _envoy_config_accesslog_v3_ExtensionFilter, ExtensionFilter__Output as _envoy_config_accesslog_v3_ExtensionFilter__Output } from '../../../../envoy/config/accesslog/v3/ExtensionFilter';
 import type { MetadataFilter as _envoy_config_accesslog_v3_MetadataFilter, MetadataFilter__Output as _envoy_config_accesslog_v3_MetadataFilter__Output } from '../../../../envoy/config/accesslog/v3/MetadataFilter';
-import type { LogTypeFilter as _envoy_config_accesslog_v3_LogTypeFilter, LogTypeFilter__Output as _envoy_config_accesslog_v3_LogTypeFilter__Output } from '../../../../envoy/config/accesslog/v3/LogTypeFilter';
 
 export interface AccessLogFilter {
   'status_code_filter'?: (_envoy_config_accesslog_v3_StatusCodeFilter | null);
@@ -27,8 +26,7 @@ export interface AccessLogFilter {
   'grpc_status_filter'?: (_envoy_config_accesslog_v3_GrpcStatusFilter | null);
   'extension_filter'?: (_envoy_config_accesslog_v3_ExtensionFilter | null);
   'metadata_filter'?: (_envoy_config_accesslog_v3_MetadataFilter | null);
-  'log_type_filter'?: (_envoy_config_accesslog_v3_LogTypeFilter | null);
-  'filter_specifier'?: "status_code_filter"|"duration_filter"|"not_health_check_filter"|"traceable_filter"|"runtime_filter"|"and_filter"|"or_filter"|"header_filter"|"response_flag_filter"|"grpc_status_filter"|"extension_filter"|"metadata_filter"|"log_type_filter";
+  'filter_specifier'?: "status_code_filter"|"duration_filter"|"not_health_check_filter"|"traceable_filter"|"runtime_filter"|"and_filter"|"or_filter"|"header_filter"|"response_flag_filter"|"grpc_status_filter"|"extension_filter"|"metadata_filter";
 }
 
 export interface AccessLogFilter__Output {
@@ -44,5 +42,4 @@ export interface AccessLogFilter__Output {
   'grpc_status_filter'?: (_envoy_config_accesslog_v3_GrpcStatusFilter__Output);
   'extension_filter'?: (_envoy_config_accesslog_v3_ExtensionFilter__Output);
   'metadata_filter'?: (_envoy_config_accesslog_v3_MetadataFilter__Output);
-  'log_type_filter'?: (_envoy_config_accesslog_v3_LogTypeFilter__Output);
 }

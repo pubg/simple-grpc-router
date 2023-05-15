@@ -29,6 +29,8 @@ export interface ProtoGrpcType {
           Extension: MessageTypeDefinition
           ExtensionConfigSource: MessageTypeDefinition
           ExtraSourceAddress: MessageTypeDefinition
+          FilesystemCollectionSubscription: MessageTypeDefinition
+          FilesystemSubscription: MessageTypeDefinition
           GrpcService: MessageTypeDefinition
           HeaderMap: MessageTypeDefinition
           HeaderValue: MessageTypeDefinition
@@ -43,6 +45,7 @@ export interface ProtoGrpcType {
           RateLimitSettings: MessageTypeDefinition
           RemoteDataSource: MessageTypeDefinition
           RequestMethod: EnumTypeDefinition
+          RestSubscription: MessageTypeDefinition
           RetryPolicy: MessageTypeDefinition
           RoutingPriority: EnumTypeDefinition
           RuntimeDouble: MessageTypeDefinition
