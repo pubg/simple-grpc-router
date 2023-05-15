@@ -115,10 +115,20 @@ type SecretCA = {
 }
 ```
 
+# Have a problem?
+If you have any problems, please [create an issue](https://github.com/pubg/simple-grpc-router/issues/new).
+
+# Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+[Contributing Guide](./CONTRIBUTING.md)
+
+# Code of Conduct
+[Code of Conduct](./CODE_OF_CONDUCT.md)
+
 # License
 MIT License
 
-Copyright (c) 2022 Bum-Seok Hwang (bitofsky@naver.com)
+Copyright (c) 2023 Bum-Seok Hwang (bitofsky@naver.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
