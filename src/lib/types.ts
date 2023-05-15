@@ -44,13 +44,13 @@ export type SecretCA = {
     }
 }
 
-export type Route = {
+export type RouteOpt = {
     path: string,
     address: string,
     clusterName: string,
 }
 
-export type Cluster = {
+export type ClusterOpt = {
     clusterName: string,
     host: string,
     port: number,
@@ -58,13 +58,13 @@ export type Cluster = {
     caName?: string,
 }
 
-export type Config = {
+export type EnvConfig = {
     nodeId: string,
     nodeCluster: string,
     adminPort: number,
     listenPort: number,
-    routeList: Route[],
-    clusterMap: Map<string, Cluster>,
+    routeList: RouteOpt[],
+    clusterMap: Map<string, ClusterOpt>,
     outputPath: string,
     sdsConfigResources: Secret[],
     listenerCertName?: string,

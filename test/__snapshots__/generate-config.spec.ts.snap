@@ -68,8 +68,8 @@ static_resources:
                           base_interval: 2s
                           max_interval: 2s
                 upgrade_configs:
-                  upgrade_type: websocket
-                  enabled: true
+                  - upgrade_type: websocket
+                    enabled: true
                 http_filters:
                   - name: envoy.filters.http.grpc_web
                     typed_config:
@@ -86,8 +86,8 @@ static_resources:
   clusters:
     - name: cluster-localhost-50051
       connect_timeout: 1.25s
-      type: strict_dns
-      lb_policy: round_robin
+      type: STRICT_DNS
+      lb_policy: ROUND_ROBIN
       dns_lookup_family: V4_ONLY
       load_assignment:
         cluster_name: cluster-localhost-50051
@@ -101,12 +101,12 @@ static_resources:
       http2_protocol_options: {}
       circuit_breakers:
         thresholds:
-          max_pending_requests: 100000000
-          max_requests: 100000000
+          - max_pending_requests: 100000000
+            max_requests: 100000000
     - name: cluster-localhost-50053
       connect_timeout: 1.25s
-      type: strict_dns
-      lb_policy: round_robin
+      type: STRICT_DNS
+      lb_policy: ROUND_ROBIN
       dns_lookup_family: V4_ONLY
       load_assignment:
         cluster_name: cluster-localhost-50053
@@ -120,8 +120,8 @@ static_resources:
       http2_protocol_options: {}
       circuit_breakers:
         thresholds:
-          max_pending_requests: 100000000
-          max_requests: 100000000
+          - max_pending_requests: 100000000
+            max_requests: 100000000
 "
 `;
 
@@ -183,8 +183,8 @@ static_resources:
                           base_interval: 2s
                           max_interval: 2s
                 upgrade_configs:
-                  upgrade_type: websocket
-                  enabled: true
+                  - upgrade_type: websocket
+                    enabled: true
                 http_filters:
                   - name: envoy.filters.http.grpc_web
                     typed_config:
@@ -201,8 +201,8 @@ static_resources:
   clusters:
     - name: cluster-localhost-50051
       connect_timeout: 1.25s
-      type: strict_dns
-      lb_policy: round_robin
+      type: STRICT_DNS
+      lb_policy: ROUND_ROBIN
       dns_lookup_family: V4_ONLY
       load_assignment:
         cluster_name: cluster-localhost-50051
@@ -216,21 +216,22 @@ static_resources:
       http2_protocol_options: {}
       circuit_breakers:
         thresholds:
-          max_pending_requests: 100000000
-          max_requests: 100000000
+          - max_pending_requests: 100000000
+            max_requests: 100000000
       transport_socket:
         name: envoy.transport_sockets.tls
         typed_config:
           '@type': >-
             type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext
           common_tls_context:
-            alpn_protocols: h2,http/1.1
+            alpn_protocols:
+              - h2,http/1.1
             tls_certificate_sds_secret_configs:
-              name: cluster-cert
-              sds_config:
-                resource_api_version: V3
-                path_config_source:
-                  path: /tmp/sds-cluster-cert.yaml
+              - name: cluster-cert
+                sds_config:
+                  resource_api_version: V3
+                  path_config_source:
+                    path: /tmp/sds-cluster-cert.yaml
             validation_context_sds_secret_config:
               name: ca-cert
               sds_config:
@@ -293,13 +294,14 @@ static_resources:
               '@type': >-
                 type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.DownstreamTlsContext
               common_tls_context:
-                alpn_protocols: h2,http/1.1
+                alpn_protocols:
+                  - h2,http/1.1
                 tls_certificate_sds_secret_configs:
-                  name: listener-cert
-                  sds_config:
-                    resource_api_version: V3
-                    path_config_source:
-                      path: /tmp/sds-listener-cert.yaml
+                  - name: listener-cert
+                    sds_config:
+                      resource_api_version: V3
+                      path_config_source:
+                        path: /tmp/sds-listener-cert.yaml
                 validation_context_sds_secret_config:
                   name: ca-cert
                   sds_config:
@@ -345,8 +347,8 @@ static_resources:
                           base_interval: 2s
                           max_interval: 2s
                 upgrade_configs:
-                  upgrade_type: websocket
-                  enabled: true
+                  - upgrade_type: websocket
+                    enabled: true
                 http_filters:
                   - name: envoy.filters.http.grpc_web
                     typed_config:
@@ -363,8 +365,8 @@ static_resources:
   clusters:
     - name: cluster-localhost-50051
       connect_timeout: 1.25s
-      type: strict_dns
-      lb_policy: round_robin
+      type: STRICT_DNS
+      lb_policy: ROUND_ROBIN
       dns_lookup_family: V4_ONLY
       load_assignment:
         cluster_name: cluster-localhost-50051
@@ -378,8 +380,8 @@ static_resources:
       http2_protocol_options: {}
       circuit_breakers:
         thresholds:
-          max_pending_requests: 100000000
-          max_requests: 100000000
+          - max_pending_requests: 100000000
+            max_requests: 100000000
 "
 `;
 
@@ -436,13 +438,14 @@ static_resources:
               '@type': >-
                 type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.DownstreamTlsContext
               common_tls_context:
-                alpn_protocols: h2,http/1.1
+                alpn_protocols:
+                  - h2,http/1.1
                 tls_certificate_sds_secret_configs:
-                  name: listener-cert
-                  sds_config:
-                    resource_api_version: V3
-                    path_config_source:
-                      path: /tmp/sds-listener-cert.yaml
+                  - name: listener-cert
+                    sds_config:
+                      resource_api_version: V3
+                      path_config_source:
+                        path: /tmp/sds-listener-cert.yaml
                 validation_context_sds_secret_config:
                   name: ca-cert
                   sds_config:
@@ -488,8 +491,8 @@ static_resources:
                           base_interval: 2s
                           max_interval: 2s
                 upgrade_configs:
-                  upgrade_type: websocket
-                  enabled: true
+                  - upgrade_type: websocket
+                    enabled: true
                 http_filters:
                   - name: envoy.filters.http.grpc_web
                     typed_config:
@@ -506,8 +509,8 @@ static_resources:
   clusters:
     - name: cluster-localhost-50051
       connect_timeout: 1.25s
-      type: strict_dns
-      lb_policy: round_robin
+      type: STRICT_DNS
+      lb_policy: ROUND_ROBIN
       dns_lookup_family: V4_ONLY
       load_assignment:
         cluster_name: cluster-localhost-50051
@@ -521,21 +524,22 @@ static_resources:
       http2_protocol_options: {}
       circuit_breakers:
         thresholds:
-          max_pending_requests: 100000000
-          max_requests: 100000000
+          - max_pending_requests: 100000000
+            max_requests: 100000000
       transport_socket:
         name: envoy.transport_sockets.tls
         typed_config:
           '@type': >-
             type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext
           common_tls_context:
-            alpn_protocols: h2,http/1.1
+            alpn_protocols:
+              - h2,http/1.1
             tls_certificate_sds_secret_configs:
-              name: cluster-cert
-              sds_config:
-                resource_api_version: V3
-                path_config_source:
-                  path: /tmp/sds-cluster-cert.yaml
+              - name: cluster-cert
+                sds_config:
+                  resource_api_version: V3
+                  path_config_source:
+                    path: /tmp/sds-cluster-cert.yaml
             validation_context_sds_secret_config:
               name: ca-cert
               sds_config:

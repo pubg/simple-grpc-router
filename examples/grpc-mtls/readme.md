@@ -2,7 +2,7 @@
 echo-client (insecure) -> simple-grpc-router (mTLS) -> simple-grpc-router (mTLS) -> echo-server (insecure)
 
 ```bash
-docker-compose up
+npm run grpc-mtls
 ```
 ```bash
 ...

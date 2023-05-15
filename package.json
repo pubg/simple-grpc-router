@@ -7,12 +7,15 @@
     "test": "jest",
     "watch": "jest --watchAll",
     "start": "ts-node src/index.ts",
-    "docker.build": "docker build -t simple-grpc-rouer:latest .",
-    "docker.run": "docker run -it -d -p 50051:50051 --env-file .env simple-grpc-rouer:latest"
+    "build": "docker build -t simple-grpc-rouer:latest .",
+    "generate-types": "./bin/generate-types.sh",
+    "grpc-mtls": "docker-compose -f ./examples/grpc-mtls/docker-compose.yml up --build"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@grpc/grpc-js": "^1.8.14",
+    "@grpc/proto-loader": "^0.7.7",
     "@types/js-yaml": "^4.0.5",
     "dotenv": "^16.0.3",
     "js-yaml": "^4.1.0",

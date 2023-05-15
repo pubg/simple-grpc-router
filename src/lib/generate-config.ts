@@ -1,9 +1,9 @@
 import { INFO } from "./utils";
-import type { Admin, Cluster, EnvoyConfig, Listener, Node, RouteElement, StaticResources, ListenerTransportSocket, ClusterTransportSocket } from "../interface";
-import type { Config } from "./types";
 import { getSdsCertConfig } from "./generate-sds";
+import type { EnvConfig } from "./types";
+import type { Cluster, Bootstrap, Admin, Node, Route, TransportSocket, DownstreamTlsContext, Listener, HttpConnectionManager, FileAccessLog, UpstreamTlsContext } from "../interface";
 
-export function generateConfig(cfg: Config): EnvoyConfig {
+export function generateConfig(cfg: EnvConfig): Bootstrap {
 
     if (!cfg.routeList?.length)
         throw new Error('No routes defined');
@@ -25,7 +25,7 @@ export function generateConfig(cfg: Config): EnvoyConfig {
         }
     };
 
-    const routes: RouteElement[] = cfg.routeList.map(route => ({
+    const routes: Route[] = cfg.routeList.map(route => ({
         match: { prefix: route.path },
         route: {
             cluster: route.clusterName,
@@ -39,13 +39,13 @@ export function generateConfig(cfg: Config): EnvoyConfig {
     if (cfg.listenerCertName && !listenerCert) throw new Error(`Listener cert ${cfg.listenerCertName} not found`);
     if (cfg.listenerCAName && !listenerCA) throw new Error(`Listener CA ${cfg.listenerCAName} not found`);
 
-    const listenerTransportSocket: ListenerTransportSocket | undefined = listenerCert ? {
+    const listenerTransportSocket: TransportSocket | undefined = listenerCert ? {
         name: 'envoy.transport_sockets.tls',
-        typed_config: {
+        typed_config: <any><DownstreamTlsContext>{
             "@type": 'type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.DownstreamTlsContext',
             common_tls_context: {
-                alpn_protocols: 'h2,http/1.1',
-                tls_certificate_sds_secret_configs: getSdsCertConfig(cfg.outputPath, listenerCert.name),
+                alpn_protocols: ['h2,http/1.1'],
+                tls_certificate_sds_secret_configs: [getSdsCertConfig(cfg.outputPath, listenerCert.name)],
                 validation_context_sds_secret_config: cfg.listenerCAName ? getSdsCertConfig(cfg.outputPath, cfg.listenerCAName) : undefined
             }
         }
@@ -73,12 +73,12 @@ export function generateConfig(cfg: Config): EnvoyConfig {
                 filters: [
                     {
                         name: 'envoy.http_connection_manager',
-                        typed_config: {
+                        typed_config: <any><HttpConnectionManager>{
                             "@type": "type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager",
                             access_log: [
                                 {
                                     name: 'envoy.file_access_log',
-                                    typed_config: {
+                                    typed_config: <any><FileAccessLog>{
                                         "@type": "type.googleapis.com/envoy.extensions.access_loggers.file.v3.FileAccessLog",
                                         path: '/dev/stdout',
                                     },
@@ -116,7 +116,7 @@ export function generateConfig(cfg: Config): EnvoyConfig {
                                     }
                                 ],
                             },
-                            upgrade_configs: { upgrade_type: 'websocket', enabled: true },
+                            upgrade_configs: [{ upgrade_type: 'websocket', enabled: true }],
                             http_filters: [{
                                 name: 'envoy.filters.http.grpc_web',
                                 typed_config: { "@type": 'type.googleapis.com/envoy.extensions.filters.http.grpc_web.v3.GrpcWeb' }
@@ -142,23 +142,23 @@ export function generateConfig(cfg: Config): EnvoyConfig {
         if (cluster.certName && !cert) throw new Error(`Cert ${cluster.certName} not found`);
         if (cluster.caName && !ca) throw new Error(`CA ${cluster.caName} not found`);
 
-        const transport_socket: ClusterTransportSocket | undefined = cert ? {
+        const transport_socket: TransportSocket | undefined = cert ? {
             name: 'envoy.transport_sockets.tls',
-            typed_config: {
+            typed_config: <any><UpstreamTlsContext>{
                 "@type": 'type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext',
                 common_tls_context: {
-                    alpn_protocols: 'h2,http/1.1',
-                    tls_certificate_sds_secret_configs: getSdsCertConfig(cfg.outputPath, cert.name),
+                    alpn_protocols: ['h2,http/1.1'],
+                    tls_certificate_sds_secret_configs: [getSdsCertConfig(cfg.outputPath, cert.name)],
                     validation_context_sds_secret_config: cluster.caName ? getSdsCertConfig(cfg.outputPath, cluster.caName) : undefined
                 },
             },
         } : undefined;
 
-        return {
+        return <Cluster>{
             name: cluster.clusterName,
             connect_timeout: '1.25s',
-            type: 'strict_dns',
-            lb_policy: 'round_robin',
+            type: 'STRICT_DNS',
+            lb_policy: 'ROUND_ROBIN',
             dns_lookup_family: 'V4_ONLY',
             load_assignment: {
                 cluster_name: cluster.clusterName,
@@ -177,16 +177,16 @@ export function generateConfig(cfg: Config): EnvoyConfig {
             },
             http2_protocol_options: {},
             circuit_breakers: {
-                thresholds: {
+                thresholds: [{
                     max_pending_requests: 100000000,
                     max_requests: 100000000,
-                },
+                }],
             },
             transport_socket,
         }
     });
 
-    const static_resources: StaticResources = {
+    const static_resources: Bootstrap['static_resources'] = {
         listeners,
         clusters,
     }
