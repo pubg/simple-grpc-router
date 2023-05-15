@@ -5,7 +5,7 @@ openssl req -x509 -nodes -newkey rsa:2048 -keyout ca-trust.key -out ca-trust.crt
 
 # grpc-a
 openssl req -new -nodes -newkey rsa:2048 -keyout grpc-a.key -out grpc-a.csr -subj "/CN=GRPC-a"
-openssl x509 -req -in grpc-a.csr -CA ca-trust.crt -CAkey ca-trust.key -CAcreateserial -out grpc-internal.crt -days 36500
+openssl x509 -req -in grpc-a.csr -CA ca-trust.crt -CAkey ca-trust.key -CAcreateserial -out grpc-a.crt -days 36500
 
 # grpc-b
 openssl req -new -nodes -newkey rsa:2048 -keyout grpc-b.key -out grpc-b.csr -subj "/CN=GRPC-b"

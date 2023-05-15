@@ -1,0 +1,48 @@
+version: "3.9"
+services:
+  client:
+    build: ../echo
+    command: node /app/client.js grpc-a:10000
+    depends_on:
+      server:
+        condition: service_healthy
+      grpc-a:
+        condition: service_healthy
+      grpc-b:
+        condition: service_healthy
+  grpc-a:
+    build: ../../
+    volumes:
+      - ../cert:/cert
+      - ./grpc-a.yaml:/config/grpc-a.yaml
+    environment:
+      - ROUTER_CONFIG_PATH=/config/grpc-a.yaml
+    healthcheck:
+      test: "nc -v -z -w 1 localhost 10000 || exit 1"
+      interval: 1s
+      timeout: 1s
+      start_period: 1s
+  grpc-b:
+    build: ../../
+    volumes:
+      - ../cert:/cert
+      - ./grpc-b.yaml:/config/grpc-b.yaml
+    environment:
+      - ROUTER_CONFIG_PATH=/config/grpc-b.yaml
+    healthcheck:
+      test: "nc -v -z -w 1 localhost 10000 || exit 1"
+      interval: 1s
+      timeout: 1s
+      start_period: 1s
+  server:
+    build: ../echo
+    command: node /app/server.js 0.0.0.0:10000
+    ports:
+      - "10000:10000"
+    volumes:
+      - ../cert:/cert
+    healthcheck:
+      test: "nc -v -z -w 1 localhost 10000 || exit 1"
+      interval: 1s
+      timeout: 1s
+      start_period: 1s

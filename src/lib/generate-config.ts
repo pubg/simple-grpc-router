@@ -44,8 +44,9 @@ export function generateConfig(cfg: Config): EnvoyConfig {
         typed_config: {
             "@type": 'type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.DownstreamTlsContext',
             common_tls_context: {
-                tls_certificate_sds_secret_configs: getSdsCertConfig(listenerCert.name),
-                validation_context_sds_secret_config: cfg.listenerCAName ? getSdsCertConfig(cfg.listenerCAName) : undefined
+                alpn_protocols: 'h2,http/1.1',
+                tls_certificate_sds_secret_configs: getSdsCertConfig(cfg.outputPath, listenerCert.name),
+                validation_context_sds_secret_config: cfg.listenerCAName ? getSdsCertConfig(cfg.outputPath, cfg.listenerCAName) : undefined
             }
         }
     } : undefined;
@@ -58,6 +59,14 @@ export function generateConfig(cfg: Config): EnvoyConfig {
                 port_value: cfg.listenPort,
             },
         },
+        listener_filters: [
+            // {
+            //     name: 'envoy.filters.listener.proxy_protocol',
+            //     typed_config: {
+            //         "@type": 'type.googleapis.com/envoy.extensions.filters.listener.proxy_protocol.v3.ProxyProtocol',
+            //     },
+            // }
+        ],
         filter_chains: [
             {
                 transport_socket: listenerTransportSocket,
@@ -138,8 +147,9 @@ export function generateConfig(cfg: Config): EnvoyConfig {
             typed_config: {
                 "@type": 'type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext',
                 common_tls_context: {
-                    tls_certificate_sds_secret_configs: getSdsCertConfig(cert.name),
-                    validation_context_sds_secret_config: cluster.caName ? getSdsCertConfig(cluster.caName) : undefined
+                    alpn_protocols: 'h2,http/1.1',
+                    tls_certificate_sds_secret_configs: getSdsCertConfig(cfg.outputPath, cert.name),
+                    validation_context_sds_secret_config: cluster.caName ? getSdsCertConfig(cfg.outputPath, cluster.caName) : undefined
                 },
             },
         } : undefined;

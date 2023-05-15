@@ -1,10 +1,9 @@
 nodeId: grpc-a
-port: 50151
-adminPort: '50152'
+port: 10000
 filters:
-- path: "/test/"
-  host: 0.0.0.0
-  port: 50251
+- path: /EchoService/
+  host: grpc-b
+  port: 10000
   certName: grpc-a-cert
   caName: ca-trust
 secrets:

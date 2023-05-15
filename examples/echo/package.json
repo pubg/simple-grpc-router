@@ -1,0 +1,14 @@
+{
+    "name": "example-gprc-mtls",
+    "private": true,
+    "type": "module",
+    "version": "0.0.1",
+    "scripts": {
+        "server": "node server.js",
+        "client": "node client.js"
+    },
+    "dependencies": {
+        "@grpc/grpc-js": "^1.8.14",
+        "@grpc/proto-loader": "^0.7.7"
+    }
+}
