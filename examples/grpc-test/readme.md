@@ -2,7 +2,7 @@
 echo-client - echo-server
 
 ```bash
-docker-compose up
+npm run grpc-test
 ```
 ```bash
 ...

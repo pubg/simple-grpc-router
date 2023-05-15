@@ -1,8 +1,8 @@
-import type { Secret } from "./types";
-import type { SDSResources } from "../interface";
 import { join } from "node:path";
+import { SdsSecretConfig, Secret } from "../interface";
+import { Secret as EnvSecret } from "./types";
 
-export function generateSDS(secret: Secret): SDSResources {
+export function generateSDS(secret: EnvSecret): { resources: (Secret & { "@type": string })[] } {
     return {
         resources: [{
             '@type': 'type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.Secret',
@@ -11,7 +11,7 @@ export function generateSDS(secret: Secret): SDSResources {
     };
 }
 
-export function getSdsCertConfig(outputPath: string, name: string) {
+export function getSdsCertConfig(outputPath: string, name: string): SdsSecretConfig {
     return {
         name,
         sds_config: {

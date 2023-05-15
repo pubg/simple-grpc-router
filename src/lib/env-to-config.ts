@@ -1,9 +1,9 @@
-import { Cluster, Config, RouterConfig, Secret } from "./types";
+import { ClusterOpt, EnvConfig, RouterConfig, Secret } from "./types";
 
-export function envToConfig(rc: RouterConfig): Config {
+export function envToConfig(rc: RouterConfig): EnvConfig {
 
     const pathSet = new Set<string>();
-    const clusterMap = new Map<string, Cluster>();
+    const clusterMap = new Map<string, ClusterOpt>();
     const getClusterName = (address: string) => `cluster-${address.replace(/[^a-zA-Z0-9]/g, '-')}`;
 
     const routeList = rc.filters.map(r => {
