@@ -9,7 +9,7 @@
     "start": "ts-node src/index.ts",
     "build": "docker build -t simple-grpc-rouer:latest .",
     "generate-types": "./bin/generate-types.sh",
-    "changelog": "docker run -it --rm -v \"$(pwd)\"://usr/local/src/your-app githubchangeloggenerator/github-changelog-generator -u pubg -p simple-grpc-router",
+    "changelog": "docker run -it -e CHANGELOG_GITHUB_TOKEN=$CHANGELOG_GITHUB_TOKEN --rm -v \"$(pwd)\"://usr/local/src/your-app githubchangeloggenerator/github-changelog-generator -u pubg -p simple-grpc-router --simple-list",
     "grpc-mtls": "docker-compose -f ./examples/grpc-mtls/docker-compose.yml up --build"
   },
   "author": "",

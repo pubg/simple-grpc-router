@@ -4,8 +4,6 @@
 
 [Full Changelog](https://github.com/pubg/simple-grpc-router/compare/v2.0.0...v2.1.0)
 
-**Merged pull requests:**
-
 - Introducing Dynamic TypeScript Type Generation from Envoy Proto Files [\#7](https://github.com/pubg/simple-grpc-router/pull/7) ([bitofsky](https://github.com/bitofsky))
 - Implementing ALPN for Enhanced Security and Adding mTLS Example [\#6](https://github.com/pubg/simple-grpc-router/pull/6) ([bitofsky](https://github.com/bitofsky))
 - Bump node from 18.12.0 to 20.1.0 [\#5](https://github.com/pubg/simple-grpc-router/pull/5) ([dependabot[bot]](https://github.com/apps/dependabot))
