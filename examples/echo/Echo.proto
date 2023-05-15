@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+message EchoMessage {
+  string str = 1;
+  double num = 2;
+}
+
+service EchoService {
+  rpc Echo1 (EchoMessage) returns (EchoMessage);
+  rpc Echo2 (EchoMessage) returns (EchoMessage);
+}
