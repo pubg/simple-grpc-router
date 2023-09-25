@@ -2,7 +2,7 @@ ARG ENVOY_VERSION=v1.26.1
 
 FROM envoyproxy/envoy:${ENVOY_VERSION} as envoy
 
-FROM node:20.5.1 as base
+FROM node:20.7.0 as base
 
 RUN apt-get update && apt-get install -y \
     curl \
